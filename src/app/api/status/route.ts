@@ -1,4 +1,4 @@
-import { geminiConfiguration } from "@/lib/gemini";
+import { geminiConfiguration } from "@/lib/server/gemini-transport";
 
 export const runtime = "nodejs";
 

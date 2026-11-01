@@ -39,6 +39,20 @@ The production deployment is publicly accessible and verified with genuine Gemin
 
 The shared response contract uses `mode: "offline" | "gemini"`. The UI must preserve that provenance when presenting results. API requests and responses are documented by the types in `src/lib/types.ts`.
 
+## Code quality and maintenance
+
+The code is organized around explicit responsibilities:
+
+- `src/components/workspace/`: workspace state transitions, navigation and dialogs.
+- `src/components/plans/`: overview, budget, timeline, vendors and inspiration presentation.
+- `src/lib/planning/`: domain configuration, named policies, pure allocation logic and offline advice.
+- `src/lib/server/`: bounded HTTP parsing, input/context validation, process-local limiting, Gemini transport and planning orchestration.
+- `src/lib/api-client.ts`: schema-validated browser requests and consistent failure handling; unchecked response casts are not used.
+
+TypeScript enforces unused-code, return-path and switch checks in addition to strict mode. Source lint rules prohibit non-null assertions and require type-only imports. Prettier provides repeatable formatting. `npm run quality` runs types, lint, formatting and unit tests. GitHub Actions repeats these checks, builds the application and runs browser tests on Node22 without a live AI credential. Contribution standards are in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+The quality refactor preserves the existing design, financial/date policies, API contracts, progress tracking, exports and AI provenance. Four additional browser-contract tests cover valid plans, malformed successful responses, unreadable upstream errors and invalid assistant patches.
+
 ## Run locally
 
 Use Node.js 22 LTS and npm.
@@ -61,7 +75,7 @@ Restart the development server after changing environment values. The key belong
 
 ## Verify
 
-Verified locally on November 1, 2026: production build and TypeScript checks pass; ESLint reports no errors; 54 unit/API tests pass; all six browser scenarios pass against the production server. Axe checks cover every planning view and the event form, with desktop and touch-enabled mobile checks. The production dependency audit reports zero known vulnerabilities. Live plan generation and assistant requests both returned `mode: "gemini"` using `gemini-2.5-flash`; the generated allocations reconciled exactly to the input budget.
+Verified locally on November 1, 2026: production build and TypeScript checks pass; ESLint reports no errors; 58 unit/API tests pass; all six browser scenarios pass against the production server. Axe checks cover every planning view and the event form, with desktop and touch-enabled mobile checks. The production dependency audit reports zero known vulnerabilities. Live plan generation and assistant requests both returned `mode: "gemini"` using `gemini-2.5-flash`; the generated allocations reconciled exactly to the input budget.
 
 The Vercel build of `d3a1203` also passed production compilation and TypeScript checks. Anonymous hosted checks returned HTTP 200 for the app, nine client assets and three public images. Both hosted AI endpoints returned `mode: "gemini"`. Hosted browser interaction was not repeated because the connected browser is disabled in Work settings; desktop/mobile interactions were verified against the local production build.
 

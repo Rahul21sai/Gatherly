@@ -1,0 +1,9 @@
+node_modules
+.next
+.vercel
+artifacts
+.dependencies-interrupted
+coverage
+playwright-report
+test-results
+*.tsbuildinfo

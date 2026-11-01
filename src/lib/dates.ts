@@ -7,8 +7,11 @@ export function planningToday(now: Date = new Date()): string {
     month: "2-digit",
     day: "2-digit",
   }).formatToParts(now);
-  const part = (type: string) =>
-    parts.find((value) => value.type === type)!.value;
+  const part = (type: "year" | "month" | "day"): string => {
+    const value = parts.find((entry) => entry.type === type)?.value;
+    if (!value) throw new Error(`Missing calendar ${type}`);
+    return value;
+  };
   return `${part("year")}-${part("month")}-${part("day")}`;
 }
 

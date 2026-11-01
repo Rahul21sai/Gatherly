@@ -47,7 +47,9 @@ test("downloads complete plans, briefs and calendars without browser errors", as
       .locator("img")
       .evaluateAll((images) =>
         images.flatMap((image) =>
-          image instanceof HTMLImageElement && image.complete && image.naturalWidth === 0
+          image instanceof HTMLImageElement &&
+          image.complete &&
+          image.naturalWidth === 0
             ? [image.src]
             : [],
         ),
@@ -158,7 +160,7 @@ test("desktop and mobile are accessible and fit the viewport", async ({
     hasTouch: true,
   });
   const mobilePage = await mobileContext.newPage();
-  await openWorkspace(mobilePage, "http://127.0.0.1:3000");
+  await openWorkspace(mobilePage, "http://127.0.0.1:3100");
   expect(
     await mobilePage.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,

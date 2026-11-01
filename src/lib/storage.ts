@@ -3,6 +3,7 @@ import type { EventPlan } from "./types";
 import { isCalendarDate } from "./dates";
 
 export const STORAGE_KEY = "gatherly-workspace-v1";
+export const MAX_SAVED_EVENTS = 20;
 const text = z.string().max(3000);
 const amount = z.number().finite().min(0).max(1e9);
 const date = z.string().refine(isCalendarDate);
@@ -19,7 +20,7 @@ const input = z.object({
   priorities: z.array(text).max(6),
   notes: text,
 });
-const savedPlan = z.object({
+export const eventPlanSchema = z.object({
   id: text,
   input,
   summary: text,
@@ -79,8 +80,8 @@ export function parseWorkspace(value: string | null): EventPlan[] {
   try {
     const data: unknown = JSON.parse(value);
     if (!Array.isArray(data)) return [];
-    return data.slice(0, 20).flatMap((item) => {
-      const parsed = savedPlan.safeParse(item);
+    return data.slice(0, MAX_SAVED_EVENTS).flatMap((item) => {
+      const parsed = eventPlanSchema.safeParse(item);
       return parsed.success ? [parsed.data] : [];
     });
   } catch {

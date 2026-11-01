@@ -9,7 +9,8 @@ import {
   ArrowRight,
   LoaderCircle,
 } from "lucide-react";
-import type { EventInput, EventType } from "@/lib/types";
+import type { EventInput } from "@/lib/types";
+import { inputSchema } from "@/lib/validation";
 import { planningToday } from "@/lib/dates";
 
 const kinds = [
@@ -72,7 +73,7 @@ export default function EventForm({
               type="button"
               key={id}
               className={`kind-option ${form.eventType === id ? "selected" : ""}`}
-              onClick={() => set("eventType", id as EventType)}
+              onClick={() => set("eventType", id)}
               aria-label={label}
               aria-describedby={`kind-${id}-description`}
               aria-pressed={form.eventType === id}
@@ -146,9 +147,12 @@ export default function EventForm({
           Currency
           <select
             value={form.currency}
-            onChange={(e) =>
-              set("currency", e.target.value as EventInput["currency"])
-            }
+            onChange={(e) => {
+              const currency = inputSchema.shape.currency.safeParse(
+                e.target.value,
+              );
+              if (currency.success) set("currency", currency.data);
+            }}
           >
             <option value="INR">INR ₹</option>
             <option value="USD">USD $</option>

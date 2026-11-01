@@ -8,12 +8,8 @@ import {
   RotateCcw,
   LoaderCircle,
 } from "lucide-react";
-import type {
-  AssistantResponse,
-  EventInput,
-  EventPlan,
-  Suggestion,
-} from "@/lib/types";
+import type { EventInput, EventPlan, Suggestion } from "@/lib/types";
+import { askPlanningAssistant } from "@/lib/api-client";
 
 interface Message {
   role: "user" | "assistant";
@@ -53,18 +49,7 @@ export default function Assistant({
     setInput("");
     setBusy(true);
     try {
-      const response = await fetch("/api/assistant", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: plan.input, plan, message: question }),
-        signal: AbortSignal.timeout(30000),
-      });
-      const data = await response.json();
-      if (!response.ok)
-        throw new Error(
-          data.error || "The assistant is taking a break. Please try again.",
-        );
-      const answer = data as AssistantResponse;
+      const answer = await askPlanningAssistant(plan.input, plan, question);
       setMessages((m) => [
         ...m,
         {

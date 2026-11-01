@@ -60,7 +60,7 @@ Fill in the observed result and any remaining issue. Do not mark a command passe
 | --- | --- | --- |
 | Types | `npm run typecheck`, production type checking | Pass |
 | Lint | ESLint on source, tests and configuration; new export test rechecked | Pass, zero errors/warnings |
-| Unit and API tests | `npm test` | 54 passed in 4 files |
+| Unit and API tests | `npm test` | 58 passed in 5 files |
 | Production build | `npm run build` | Pass; all three API routes and the app compile |
 | Browser flows | Full 5-scenario suite plus targeted export scenario against `npm start` | All 6 passed |
 | Desktop inspection | Production screenshot and main flows | Pass at 1280px |
@@ -108,3 +108,8 @@ The challenge permits **at most three submission attempts**. This checklist does
 Record any unmet requirement, unverified provider behavior, failed check or unavailable deployment here before submitting. Preserve the distinction between implemented code, locally verified behavior and externally published evidence.
 
 **Current evidence status:** The public repository, Vercel deployment and genuine hosted Gemini flows are verified. Recording, a full manual assistive-technology review and portal submission remain pending. Sixteen moderate development-tool advisories are documented; the production-only audit reports zero. No portal submission attempt was made.
+
+
+## Code-quality refactor verification
+
+Behavior-preserving modular refactor verified on November1,2026:strict TypeScript/build pass;58 unit/API tests;6 browser scenarios including Axe checks;48 source/test/configuration files linted with0errorsand0warnings;formatcheck passes. Added cohesive planning/server/feature/workspace modules, validated clientresponses, contributionstandards and Node22 CI. Portalsubmission remainsmanual.
