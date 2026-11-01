@@ -46,9 +46,11 @@ test("downloads complete plans, briefs and calendars without browser errors", as
     await page
       .locator("img")
       .evaluateAll((images) =>
-        images
-          .filter((image) => image.complete && image.naturalWidth === 0)
-          .map((image) => image.src),
+        images.flatMap((image) =>
+          image instanceof HTMLImageElement && image.complete && image.naturalWidth === 0
+            ? [image.src]
+            : [],
+        ),
       ),
   ).toEqual([]);
   await page.screenshot({ path: "artifacts/production.png", fullPage: true });

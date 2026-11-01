@@ -89,6 +89,8 @@ The source repository is public. Deployment access and live server behavior must
 
 Gemini credentials stay server-side. Provider calls use a 20-second timeout, bounded JSON output and schema validation. The in-memory limiter allows 12 provider calls per client and 60 per running process per minute, with at most 256 client buckets. It does not coordinate across serverless instances. The local server binds to `127.0.0.1`; a broad public deployment should add shared abuse controls and appropriate provider billing limits. No guest contact lists, payments or booking credentials are needed by this build.
 
+The complete development-tool dependency graph currently reports 16 moderate entries caused by the [minimatch glob-pattern denial-of-service advisory](https://github.com/advisories/GHSA-g3hv-75wg-m249) through ESLint tooling. All affected installed packages are development dependencies; the production-only audit reports zero findings. A compatible upstream tooling update remains pending. The suggested forced downgrades were not applied because they would replace the current lint configuration with incompatible major versions.
+
 ## Assumptions and limits
 
 - Supported event types: wedding, birthday and community. Supported currencies: INR, USD and EUR; no exchange-rate conversion is performed.
