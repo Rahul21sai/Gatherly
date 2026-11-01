@@ -1,0 +1,12 @@
+.git
+.vercel
+node_modules
+.next
+.env*
+artifacts
+test-results
+playwright-report
+coverage
+.dependencies-interrupted
+.package-lock-interrupted.json
+*.tsbuildinfo

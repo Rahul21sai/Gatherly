@@ -6,7 +6,7 @@ The chosen vertical is **Celebration & Event Planning**. The product focuses on 
 
 ![Gatherly event workspace](docs/preview.webp)
 
-**Current status:** Working local build. Publication and deployment are deferred at the owner's request. The Gemini integration is implemented; a live provider call remains unverified until a key is configured.
+**Current status:** Production build verified locally, including genuine Gemini plan generation and assistant replies. The public source repository is [Rahul21sai/Gatherly](https://github.com/Rahul21sai/Gatherly); hosting is being prepared.
 
 ## Product flow
 
@@ -59,7 +59,7 @@ Restart the development server after changing environment values. The key belong
 
 ## Verify
 
-Verified locally on November 1, 2026: production build and TypeScript checks pass; ESLint reports no errors; 54 unit/API tests pass; all six browser scenarios pass against the production server. Axe checks cover every planning view and the event form, with desktop and touch-enabled mobile checks. The production dependency audit reports zero known vulnerabilities. Live Gemini remains unverified because no key is configured.
+Verified locally on November 1, 2026: production build and TypeScript checks pass; ESLint reports no errors; 54 unit/API tests pass; all six browser scenarios pass against the production server. Axe checks cover every planning view and the event form, with desktop and touch-enabled mobile checks. The production dependency audit reports zero known vulnerabilities. Live plan generation and assistant requests both returned `mode: "gemini"` using `gemini-2.5-flash`; the generated allocations reconciled exactly to the input budget.
 
 ```sh
 npm run typecheck
@@ -83,7 +83,7 @@ npm start
 
 Deploy with a host that supports Next.js server routes and environment secrets. A static export cannot run the Gemini endpoints. Configure `GEMINI_API_KEY` and `GEMINI_MODEL` on the host, then redeploy and repeat both the Gemini and fallback checks against the deployed app. For Vercel, import the repository as a Next.js project and add those values in its environment settings.
 
-No public repository URL or deployment URL is asserted by this document. Add verified links to the submission only after checking anonymous access. Review API abuse controls and provider billing limits before sharing an unrestricted public endpoint; this MVP has no user accounts or per-user access boundary.
+The source repository is public. Deployment access and live server behavior must also be checked anonymously before submission. This MVP has no user accounts or per-user access boundary; the resource controls and their limitations are documented below.
 
 ## Security and resource limits
 
