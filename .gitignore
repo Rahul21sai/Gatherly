@@ -1,4 +1,6 @@
 node_modules/
+.dependencies-interrupted/
+.package-lock-interrupted.json
 .next/
 out/
 .env*
