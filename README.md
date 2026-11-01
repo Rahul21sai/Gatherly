@@ -6,7 +6,9 @@ The chosen vertical is **Celebration & Event Planning**. The product focuses on 
 
 ![Gatherly event workspace](docs/preview.webp)
 
-**Current status:** Production build verified locally, including genuine Gemini plan generation and assistant replies. The public source repository is [Rahul21sai/Gatherly](https://github.com/Rahul21sai/Gatherly); hosting is being prepared.
+**Live app:** [gatherly-liard-ten.vercel.app](https://gatherly-liard-ten.vercel.app) · **Source:** [Rahul21sai/Gatherly](https://github.com/Rahul21sai/Gatherly)
+
+The production deployment is publicly accessible and verified with genuine Gemini plan generation and assistant replies. A hosted community-event plan reconciled exactly to its ₹150,000 budget. The credential is stored as a server-side Vercel Secret and was absent from the checked public HTML and JavaScript.
 
 ## Product flow
 
@@ -61,6 +63,8 @@ Restart the development server after changing environment values. The key belong
 
 Verified locally on November 1, 2026: production build and TypeScript checks pass; ESLint reports no errors; 54 unit/API tests pass; all six browser scenarios pass against the production server. Axe checks cover every planning view and the event form, with desktop and touch-enabled mobile checks. The production dependency audit reports zero known vulnerabilities. Live plan generation and assistant requests both returned `mode: "gemini"` using `gemini-2.5-flash`; the generated allocations reconciled exactly to the input budget.
 
+The Vercel build of `d3a1203` also passed production compilation and TypeScript checks. Anonymous hosted checks returned HTTP 200 for the app, nine client assets and three public images. Both hosted AI endpoints returned `mode: "gemini"`. Hosted browser interaction was not repeated because the connected browser is disabled in Work settings; desktop/mobile interactions were verified against the local production build.
+
 ```sh
 npm run typecheck
 npm run lint
@@ -83,7 +87,7 @@ npm start
 
 Deploy with a host that supports Next.js server routes and environment secrets. A static export cannot run the Gemini endpoints. Configure `GEMINI_API_KEY` and `GEMINI_MODEL` on the host, then redeploy and repeat both the Gemini and fallback checks against the deployed app. For Vercel, import the repository as a Next.js project and add those values in its environment settings.
 
-The source repository is public. Deployment access and live server behavior must also be checked anonymously before submission. This MVP has no user accounts or per-user access boundary; the resource controls and their limitations are documented below.
+The source repository and production URL have been checked anonymously. Deployment was made with Vercel CLI from application revision `d3a1203`, using the committed Next.js configuration and Node 22 runtime requirement. This MVP has no user accounts or per-user access boundary; the resource controls and their limitations are documented below.
 
 ## Security and resource limits
 

@@ -2,7 +2,7 @@
 
 Build a submission-ready Celebration & Event Planner for weddings, birthdays, and community events. The user explicitly requested a challenge prompt and to start building. Implementation choices below are builder defaults.
 
-User decisions during implementation: use Gemini, with the owner adding the key locally; keep the build local for now. Public repository creation, deployment and portal submission are deferred.
+User decisions: use Gemini. The initial local-only hold was superseded by explicit authorization to push to `Rahul21sai/Gatherly` and deploy to Vercel using the supplied credential. Portal submission remains manual.
 
 ## Product
 An event workspace starts with a sample wedding, with a clear New event action. A guided form captures title, type, date, city, guest count, total budget/currency, style, priorities, and notes. Generate a budget, dated tasks, vendor requirements and tailored ideas. Tabs expose editable budget spend, task completion, vendor status, and saved ideas. An assistant answers questions and proposes explicit constraint edits; applying one regenerates a plan after warning that tracked progress resets. Export JSON and a calendar file. Persist the workspace in the current browser, recover from corrupt storage, and support multiple saved events.

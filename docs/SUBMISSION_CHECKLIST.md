@@ -8,9 +8,9 @@ This file records release evidence. Unchecked items are unverified, not implied 
 | --- | --- |
 | Chosen vertical | Celebration & Event Planning |
 | Product | Gatherly |
-| Public repository URL | Deferred: owner requested a local build |
-| Deployment URL, if submitted | Deferred: owner requested a local build |
-| Verified application revision | `2b8f420`; later changes document evidence and format tests |
+| Public repository URL | https://github.com/Rahul21sai/Gatherly |
+| Deployment URL, if submitted | https://gatherly-liard-ten.vercel.app |
+| Verified application revision | `d3a1203`; later changes document release evidence |
 | Walkthrough URL or file | `docs/DEMO_SCRIPT.md`; recording not created |
 | Walkthrough duration | Script targets 3:45; actual recording remains pending |
 | Final verification date | November 1, 2026 |
@@ -31,7 +31,7 @@ This file records release evidence. Unchecked items are unverified, not implied 
 
 ## Gemini and security
 
-- [ ] A real Gemini request succeeds from the final environment, with response `mode: "gemini"` matching the UI source label.
+- [x] Real hosted plan and assistant requests both return `mode: "gemini"`. The hosted plan preserves the exact ₹150,000 allocation total.
 - [x] The real missing-key flow works. Controlled API tests cover provider failure with truthful offline provenance.
 - [x] Invalid, malformed and oversized requests fail safely; malformed provider output cannot override calculations.
 - [x] Requests and model output are bounded, with a provider timeout and safe public errors.
@@ -40,7 +40,7 @@ This file records release evidence. Unchecked items are unverified, not implied 
 - [x] The README explains local storage, Gemini data flow, the process-local limiter and public deployment limits.
 - [ ] Public deployment abuse controls and provider billing settings have been reviewed for the intended sharing scope.
 
-If the live Gemini item remains unchecked, describe the integration as implemented but unverified. Do not replace it with a mock success or claim full challenge readiness where live Gemini proof is required.
+Hosted Gemini was verified with fictional event data. The public page, nine client assets and three images returned HTTP 200. The checked public HTML/JavaScript did not contain the credential. Interactive desktop/mobile checks were performed locally; the connected browser was disabled for the hosted check.
 
 ## Code quality, efficiency and accessibility
 
@@ -66,24 +66,24 @@ Fill in the observed result and any remaining issue. Do not mark a command passe
 | Desktop inspection | Production screenshot and main flows | Pass at 1280px |
 | Mobile inspection | Touch context at 375px, menu and budget view | Pass, no document overflow |
 | Keyboard/accessibility | Native controls, Escape regression and Axe scans | Automated checks pass; full manual assistive-technology review not performed |
-| Genuine Gemini | Fresh provider response and matching UI source | Pending: no key configured |
+| Genuine Gemini | Fresh local and hosted provider responses | Plan and assistant both pass with `mode: "gemini"` |
 | Provider fallback | Real missing-key flow plus controlled provider tests | Pass |
 | Export inspection | Browser downloads and content checks | JSON, Markdown, ICS pass; no external calendar write/import |
-| Dependencies | `npm audit --omit=dev --audit-level=high` | Zero known vulnerabilities |
+| Dependencies | Production-only and full dependency audits | Production: zero; full graph: 16 moderate development-tool entries, documented in README |
 | Browser runtime | Production export flow, console/page errors and loaded images | No errors or broken loaded images observed |
 
 ## Repository and deployment
 
-- [ ] Public repository is accessible in an anonymous browser session.
-- [x] Exactly one local branch exists: `main`. Public branch verification is deferred with publication.
+- [x] The public repository API is accessible without authentication.
+- [x] Exactly one branch exists locally and on GitHub: `main`.
 - [x] Tracked source/assets and the source ZIP are below 10 MB. Verify the portal's host-size interpretation when publishing.
 - [x] Dependencies, builds, reports, downloads and secrets are excluded from tracked files.
 - [x] README explains the vertical, logic, assumptions, setup, verification and deployment.
-- [x] Clean `npm ci` and the documented production startup succeeded locally. A remote fresh-clone check is deferred because no public repository was created.
-- [ ] Any submitted deployment URL loads anonymously and its server routes function.
-- [ ] Host environment values are configured privately, and genuine Gemini/fallback checks are repeated on the deployment if submitted.
+- [x] Clean `npm ci` and production startup succeeded locally. Vercel also installed a clean dependency tree and completed the production build.
+- [x] The production URL loads anonymously; real plan and assistant requests succeed.
+- [x] Gemini credentials are stored as a Vercel production Secret. Hosted live-Gemini checks pass; controlled failure cases remain covered by the local API tests.
 
-Measured application revision `2b8f420`: **898,066 tracked bytes**, **555,477-byte source ZIP**. Subsequent evidence-only changes keep the project below 1 MB. Local branch evidence: `git branch --list` returns only `main`. Public access is intentionally unverified.
+The measured tracked source remains below **1 MB**, with a source ZIP below **0.6 MB**. GitHub's anonymous branch listing and `git branch --list` both return only `main`. The Vercel upload check excluded environment files, credentials, dependencies, build output and test artifacts.
 
 ## Recording and portal
 
@@ -107,4 +107,4 @@ The challenge permits **at most three submission attempts**. This checklist does
 
 Record any unmet requirement, unverified provider behavior, failed check or unavailable deployment here before submitting. Preserve the distinction between implemented code, locally verified behavior and externally published evidence.
 
-**Current evidence status:** Local implementation and verification are complete. Live Gemini proof requires a key. Public repository creation, deployment, recording, manual assistive-technology review and portal submission remain pending; the owner requested keeping this build local for now. No submission attempt was made.
+**Current evidence status:** The public repository, Vercel deployment and genuine hosted Gemini flows are verified. Recording, a full manual assistive-technology review and portal submission remain pending. Sixteen moderate development-tool advisories are documented; the production-only audit reports zero. No portal submission attempt was made.
