@@ -12,25 +12,46 @@ async function openWorkspace(page: Page, url = "/") {
   );
 }
 
-test("downloads complete plans, briefs and calendars without browser errors", async ({ page }) => {
+test("downloads complete plans, briefs and calendars without browser errors", async ({
+  page,
+}) => {
   const errors: string[] = [];
-  page.on("pageerror", error => errors.push(error.message));
-  page.on("console", message => { if (message.type() === "error") errors.push(message.text()); });
+  page.on("pageerror", (error) => errors.push(error.message));
+  page.on("console", (message) => {
+    if (message.type() === "error") errors.push(message.text());
+  });
   await openWorkspace(page);
-  await page.getByRole("button", {name:"Take your plan with you"}).click();
-  for (const [name, filename] of [["Complete plan", "gatherly-plan.json"], ["Readable event brief", "gatherly-event-brief.md"], ["Calendar reminders", "gatherly-timeline.ics"]]) {
+  await page.getByRole("button", { name: "Take your plan with you" }).click();
+  for (const [name, filename] of [
+    ["Complete plan", "gatherly-plan.json"],
+    ["Readable event brief", "gatherly-event-brief.md"],
+    ["Calendar reminders", "gatherly-timeline.ics"],
+  ]) {
     const pending = page.waitForEvent("download");
-    await page.getByRole("dialog").getByRole("button", {name:new RegExp(`^${name}`)}).click();
+    await page
+      .getByRole("dialog")
+      .getByRole("button", { name: new RegExp(`^${name}`) })
+      .click();
     const download = await pending;
     expect(download.suggestedFilename()).toBe(filename);
     const content = await readFile((await download.path())!, "utf8");
-    if (filename.endsWith("json")) expect(JSON.parse(content).input.eventType).toBe("wedding");
+    if (filename.endsWith("json"))
+      expect(JSON.parse(content).input.eventType).toBe("wedding");
     if (filename.endsWith("md")) expect(content).toContain("## Budget");
-    if (filename.endsWith("ics")) expect(content).toContain("BEGIN:VCALENDAR\r\n");
+    if (filename.endsWith("ics"))
+      expect(content).toContain("BEGIN:VCALENDAR\r\n");
   }
-  await page.getByRole("button", {name:"Close dialog"}).click();
-  expect(await page.locator("img").evaluateAll(images => images.filter(image => image.complete && image.naturalWidth === 0).map(image => image.src))).toEqual([]);
-  await page.screenshot({path:"artifacts/production.png",fullPage:true});
+  await page.getByRole("button", { name: "Close dialog" }).click();
+  expect(
+    await page
+      .locator("img")
+      .evaluateAll((images) =>
+        images
+          .filter((image) => image.complete && image.naturalWidth === 0)
+          .map((image) => image.src),
+      ),
+  ).toEqual([]);
+  await page.screenshot({ path: "artifacts/production.png", fullPage: true });
   expect(errors).toEqual([]);
 });
 

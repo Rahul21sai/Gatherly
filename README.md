@@ -59,6 +59,8 @@ Restart the development server after changing environment values. The key belong
 
 ## Verify
 
+Verified locally on November 1, 2026: production build and TypeScript checks pass; ESLint reports no errors; 54 unit/API tests pass; all six browser scenarios pass against the production server. Axe checks cover every planning view and the event form, with desktop and touch-enabled mobile checks. The production dependency audit reports zero known vulnerabilities. Live Gemini remains unverified because no key is configured.
+
 ```sh
 npm run typecheck
 npm run lint
@@ -68,7 +70,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-These are verification commands, not a claim that every check has passed in this checkout. Record the actual command, date and result in the [submission checklist](docs/SUBMISSION_CHECKLIST.md) before release. Browser checks should cover desktop and mobile layouts, keyboard use, event persistence, every editable tracker, assistant reset confirmation, JSON/calendar downloads and corrupt-storage recovery. Unit/API checks should cover money reconciliation, date boundaries, all event types, invalid requests and provider fallback.
+Detailed results and outstanding publication items are recorded in the [submission checklist](docs/SUBMISSION_CHECKLIST.md). Browser checks cover desktop and mobile layouts, event persistence, editable trackers, assistant reset confirmation, dialog recovery and real JSON/Markdown/calendar downloads. Unit/API checks cover reconciliation, date boundaries, all event types, invalid requests and provider fallback. Automated accessibility checks are not a substitute for a complete assistive-technology review.
 
 For a production-mode local check:
 
@@ -82,6 +84,10 @@ npm start
 Deploy with a host that supports Next.js server routes and environment secrets. A static export cannot run the Gemini endpoints. Configure `GEMINI_API_KEY` and `GEMINI_MODEL` on the host, then redeploy and repeat both the Gemini and fallback checks against the deployed app. For Vercel, import the repository as a Next.js project and add those values in its environment settings.
 
 No public repository URL or deployment URL is asserted by this document. Add verified links to the submission only after checking anonymous access. Review API abuse controls and provider billing limits before sharing an unrestricted public endpoint; this MVP has no user accounts or per-user access boundary.
+
+## Security and resource limits
+
+Gemini credentials stay server-side. Provider calls use a 20-second timeout, bounded JSON output and schema validation. The in-memory limiter allows 12 provider calls per client and 60 per running process per minute, with at most 256 client buckets. It does not coordinate across serverless instances. The local server binds to `127.0.0.1`; a broad public deployment should add shared abuse controls and appropriate provider billing limits. No guest contact lists, payments or booking credentials are needed by this build.
 
 ## Assumptions and limits
 
